@@ -1,4 +1,5 @@
 ```mermaid
+
 flowchart LR
     subgraph "Client Layer"
         WEB[["🌐 Next.js Web App<br/>━━━━━━━━━━━━━━━━<br/>• Supabase Auth UI<br/>• Chat Interface<br/>• Dashboard<br/>• Integration Setup"]]
@@ -14,8 +15,8 @@ flowchart LR
         AUTH_SERVICE[["🔑 Auth Service<br/>━━━━━━━━━━━━━━━━<br/>Port: 8001<br/>━━━━━━━━━━━━━━━━<br/>• User authentication<br/>• Tenant management<br/>• Token validation<br/>• Subscription status<br/>• >>YATHARTH<<"]]
         
         ANALYTICS_SERVICE[["📊 Analytics Service<br/>━━━━━━━━━━━━━━━━<br/>Port: 8002<br/>━━━━━━━━━━━━━━━━<br/>• Natural language queries<br/>• ADK agent orchestration<br/>• Chart generation<br/>• SQL execution<br/>• >>SID<<"]]
+        INTEGRATION_SERVICE[["🔌 Integration Service<br/>━━━━━━━━━━━━━━━━<br/>Port: 8003<br/>━━━━━━━━━━━━━━━━<br/>• GA4 linking<br/>• GSC bulk export<br/>• Choose sync: Google Ads, HS or Instantly<br/>• Dataset creation<br/>• >>ANTON<<"]]
         
-        INTEGRATION_SERVICE[["🔌 Integration Service<br/>━━━━━━━━━━━━━━━━<br/>Port: 8003<br/>━━━━━━━━━━━━━━━━<br/>• GA4 linking<br/>• GSC bulk export<br/>• HubSpot sync<br/>• Dataset creation<br/>• >>ANTON<<"]]
         
         BILLING_SERVICE[["💳 Billing Service<br/>━━━━━━━━━━━━━━━━<br/>Port: 8004<br/>━━━━━━━━━━━━━━━━<br/>• Stripe webhooks<br/>• Subscription mgmt<br/>• Usage tracking<br/>• (MVP: Stubbed)"]]
     end
@@ -109,11 +110,12 @@ flowchart LR
         direction LR
         STEP1["1️⃣ User asks question"]
         STEP2["2️⃣ Gateway validates JWT"]
-        STEP3["3️⃣ Analytics Service receives"]
-        STEP4["4️⃣ ADK processes query"]
-        STEP5["5️⃣ SQL executes on BigQuery"]
-        STEP6["6️⃣ ChartSpec generated"]
-        STEP7["7️⃣ Response to frontend"]
+        STEP3["3️⃣ Integration of 3 Tools and data stored on BQ"]
+        STEP4["4️⃣ Analytics Service receives"]
+        STEP5["5️⃣ ADK processes query"]
+        STEP6["6️⃣ SQL executes on BigQuery"]
+        STEP7["7️⃣ ChartSpec generated"]
+        STEP8["8️⃣ Response to frontend"]
     end
     
     STEP1 --> STEP2 --> STEP3 --> STEP4 --> STEP5 --> STEP6 --> STEP7
