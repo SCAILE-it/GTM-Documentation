@@ -49,6 +49,8 @@ Go-to-market professionals including:
 
 ## Sprint Timeline & Team Division
 
+> NOTE: For the MVP launch, we will only be showing integrations with GA4, GSC and a third tool that will be decided by Anton based on time constraints - HubSpot / Google Ads / Instantly / Phantom Buster, etc.
+
 ### Phase 1: Core Backend Setup (Day 1-2)
 > **All team members collaborate on foundation**
 
@@ -57,7 +59,7 @@ Go-to-market professionals including:
 **Anton - Data Layer**
 - Set up GCP project and BigQuery
 - Create dataset template structure
-- Design table schemas for GA4, GSC, HubSpot/Google Ads (you choose)
+- Design table schemas for GA4, GSC, HubSpot/Google Ads/etc. (Anton chooses)
 - Document data types and partitioning strategy
 ```sql
 -- Just suggestions:
@@ -112,18 +114,18 @@ CREATE TABLE app.integrations (
 **Sid - FastAPI & ADK Setup**
 - Initialize Cloud Run project structure
 - Set up FastAPI with microservices architecture
-- Deploy ADK agents with Google Cloud Run
+- Deploy existing ADK project with Google Cloud Run
 - Create base API structure
-- Add basic logging
 - Create analytics API endpoints
+- Add preliminary logging
 
 #### Day 2: Service Implementation & Views
 
 **Anton - BigQuery Transformations, Views and Tool Integrations**
 - Set up data transformation logic and views for each tool
-- Implement tool integrations for each tool using BigQuery Data Transfer Service, HubSpot native integration, CSV upload, etc. for GA4, GSC and HubSpot each.
+- Implement API/ELT based integrations for each tool using BigQuery Data Transfer Service, HubSpot native integration, CSV upload, etc. for GA4, GSC and third chosen tool, each
 - Essentially the Tenant should be able to call an endpoint to Trigger an end-to-end data loading process for each tool they start the integration process.
-- Go for low hanging fruit for now and implement the data loading process for GA4, GSC and HubSpot/or Google Ads each.
+- Go for low hanging fruit for now and implement the data loading process for GA4, GSC and the third chosen tool each.
 
 **Yatharth - Payment Integration & Tenant Services**
 - Set up Stripe payment services
@@ -207,15 +209,14 @@ async def get_integration_status(tenant_id: str):
 #### Day 3: Data Integrations & Frontend Base
 
 **Anton - Finish up on the Tool Integration Microservices**
-- Set up GA4 to BigQuery linking flow
-- Configure GSC to BigQuery Linking/ bulk export/CSV upload
-- Implement HubSpot/Google Ads data loader
+- Refine the Tool Integration Microservices to be more robust
+- Add API endpoint trigger for manual refresh for each tool
+- Prepare everything (API endpoints, Microservices, etc.) for the FE to call to trigger the data loading process and storage in the BQ dataset per tenant with Sid
 
 **Yatharth - Frontend Integration**
-- Wire authentication to subscription to Chat interface frontend
+- Wire authentication -> subscription -> Chat interface frontend
 - Connect chat interface to Backend FastAPI service facilitated by Cloud Run
-- Create dashboard for pinned charts
-- Implement chart pinning functionality
+- Connect dashboard -> pinned charts functionality to backend ADK API service as well as User's preferences in Supabase
 - Skip integration setup for now - Assume that the integrations are already hardcoded
 ```jsx
 // Auth setup with Supabase
@@ -265,21 +266,23 @@ function ChatInterface() {
 ```
 
 **Sid - ADK BQ Connection + Tool Integration API Endpoints**
-- Configure ADK agents for BigQuery access
-- Facilitate Tool Integrations Microservices setup
+- Improve ADK agents for BigQuery access
+- Help Anton with Tool Integrations Microservices setup and Deployment
 - Add comprehensive error handling
 
 #### Day 4: Integration UI & Advanced Features
 
 **Anton - Microservices to Trigger data loading to BigQuery from UI**
-- Implement Tool Integration API Microservices for each of the 3 tools so that the FE can actually call these APIs to store the data in the BQ dataset per tenant
+- Finish and deploy the Tool Integration API Microservices for each of the 3 tools so that the FE can actually call these APIs from the deployed cloud Endpoints to trigger the data loading process and storage in the BQ dataset per tenant
 
 **Yatharth - Integration UI & Dashboard**
 - Build integration setup screens
+- Utilise the Tool Integration API Endpoints to trigger the data loading process and storage in the BQ dataset per tenant
+- Show feedback to the user on the status of the data loading process
 
 **Sid - CI/CD & Monitoring**
-- Set up basic monitoring
-- Setup basic CI/CD pipeline
+- Set up Preliminary monitoring
+- Setup Preliminary CI/CD pipeline
 
 ### Phase 3: Polish & Demo Preparation (Day 5)
 
@@ -303,7 +306,7 @@ function ChatInterface() {
 9. [ ] Ask: "Show conversion funnel by channel"
 10. [ ] View dashboard with multiple pinned charts
 
-## API Specification - Rough
+## API Specification - Rough - Must be refined
 
 ### Authentication Endpoints
 ```
